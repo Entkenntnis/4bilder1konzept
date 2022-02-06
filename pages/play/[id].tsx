@@ -1,9 +1,11 @@
+import clsx from 'clsx'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Level, Levels } from '../../levels'
+import bcrypt from 'bcryptjs'
 
 export default function LevelPage({ id, level }: { level: Level; id: string }) {
   return (
@@ -11,7 +13,7 @@ export default function LevelPage({ id, level }: { level: Level; id: string }) {
       <Head>
         <title>Level {id} | 4 bilder 1 konzept</title>
       </Head>
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto" key={id}>
         <div className="mt-6">
           <Link href="/">
             <a>
@@ -23,7 +25,7 @@ export default function LevelPage({ id, level }: { level: Level; id: string }) {
         </div>
         <h1 className="text-center text-3xl mt-4 mb-8">Level {id}</h1>
         <Images images={level.images} />
-        <Letters level={level} />
+        <Letters level={level} id={parseInt(id) ?? -1} />
       </div>
     </>
   )
@@ -115,38 +117,109 @@ function Images({ images }: { images: Level['images'] }) {
   )
 }
 
-function Letters({ level }: { level: Level }) {
+function Letters({ level, id }: { level: Level; id: number }) {
   const letterStyle =
-    /* className={ */ 'w-8 -h-8 border flex justify-center items-center select-none cursor-pointer'
+    /* className={ */ 'w-8 h-8 border flex justify-center items-center select-none'
+
+  const [selection, setSelection] = useState<number[]>(
+    new Array(level.answerLength).fill(-1)
+  )
+
+  const [mode, setMode] = useState<'input' | 'wrong' | 'correct'>('input')
+
+  useEffect(() => {
+    if (selection.every((x) => x != -1)) {
+      // check
+      const answer = selection.map((x) => level.letters[x]).join('')
+      bcrypt.compare(answer, level.answerHash).then((ok) => {
+        if (ok) {
+          setMode('correct')
+        } else {
+          setMode('wrong')
+        }
+      })
+    } else {
+      setMode('input')
+    }
+  }, [selection, level])
 
   return (
     <>
-      <div className="mt-12 mx-auto flex justify-center gap-5">
+      <div className="mt-12 mx-auto flex justify-center gap-2">
         {new Array(level.answerLength).fill(0).map((_, i) => (
-          <div className="w-8 h-8 border" key={i}></div>
+          <div
+            className={clsx(
+              'w-8 h-8 border-2 border-gray-400',
+              'flex justify-center items-center text-xl select-none',
+              selection[i] >= 0 && mode != 'correct' && 'cursor-pointer',
+              mode == 'wrong' && 'bg-orange-400',
+              mode == 'correct' && 'bg-green-300'
+            )}
+            key={i}
+            onClick={() => {
+              if (mode == 'correct') return
+              const newSelection = [...selection]
+              newSelection[i] = -1
+              setSelection(newSelection)
+            }}
+          >
+            {selection[i] >= 0 ? level.letters[selection[i]] : null}
+          </div>
         ))}
       </div>
-      <div className="mt-12 w-[350px] mx-auto">
-        <div className="flex justify-between">
-          <div className={letterStyle}>{level.letters[0]}</div>
-          <div className={letterStyle}>{level.letters[1]}</div>
-          <div className={letterStyle}>{level.letters[2]}</div>
-          <div className={letterStyle}>{level.letters[3]}</div>
-          <div className={letterStyle}>{level.letters[4]}</div>
-          <div className={letterStyle}>{level.letters[5]}</div>
+      {mode == 'correct' && id < 20 ? (
+        <div className="mt-8 flex justify-center">
+          <Link href={`/play/${id + 1}`}>
+            <a>
+              <button className="py-1 px-3 rounded-full bg-green-200 hover:bg-green-300">
+                nächstes Level
+              </button>
+            </a>
+          </Link>
         </div>
+      ) : (
+        <div className="mt-12 w-[350px] mx-auto">
+          <div className="flex justify-between">
+            {[0, 1, 2, 3, 4, 5].map((i) => renderCell(i))}
+          </div>
 
-        <div className="mt-4 flex justify-between">
-          <div className={letterStyle}>{level.letters[6]}</div>
-          <div className={letterStyle}>{level.letters[7]}</div>
-          <div className={letterStyle}>{level.letters[8]}</div>
-          <div className={letterStyle}>{level.letters[9]}</div>
-          <div className={letterStyle}>{level.letters[10]}</div>
-          <div className={letterStyle}>{level.letters[11]}</div>
+          <div className="mt-4 flex justify-between">
+            {[6, 7, 8, 9, 10, 11].map((i) => renderCell(i))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
+
+  function renderCell(i: number) {
+    return selection.some((x) => x == i) ? (
+      <div className={letterStyle} key={i}></div>
+    ) : (
+      <div
+        className={clsx(
+          letterStyle,
+          selection.every((l) => l != i) &&
+            selection.some((l) => l == -1) &&
+            mode != 'correct' &&
+            'cursor-pointer'
+        )}
+        key={i}
+        onClick={() => {
+          if (mode == 'correct') return
+          setSelection((selection) => {
+            const newSelection = [...selection]
+            const firstEmpty = newSelection.findIndex((x) => x == -1)
+            if (firstEmpty >= 0) {
+              newSelection[firstEmpty] = i
+            }
+            return newSelection
+          })
+        }}
+      >
+        {level.letters[i]}
+      </div>
+    )
+  }
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {

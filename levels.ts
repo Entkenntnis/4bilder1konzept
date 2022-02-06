@@ -1,5 +1,3 @@
-import Level from './pages/play/[id]'
-
 type Char =
   | 'A'
   | 'B'
@@ -54,7 +52,7 @@ export interface Level {
     Char
   ]
   answerLength: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
-  answerHash: string
+  answerHash: string // use 9 rounds for good performance
 }
 
 export const Levels: { [index: string]: Level } = {
@@ -246,6 +244,17 @@ export const Levels: { [index: string]: Level } = {
     answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
   },
   18: {
+    images: {
+      imageA: '/images/test.png',
+      imageB: '/images/test.png',
+      imageC: '/images/test.png',
+      imageD: '/images/test.png',
+    },
+    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
+    answerLength: 4,
+    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
+  },
+  19: {
     images: {
       imageA: '/images/test.png',
       imageB: '/images/test.png',

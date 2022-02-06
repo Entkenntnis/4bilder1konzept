@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   return (
@@ -17,38 +18,51 @@ export default function Home() {
 }
 
 function Grid() {
-  // TODO highlight solved levels
+  const [solved, setSolved] = useState<number[] | undefined>(undefined)
+
+  useEffect(() => {
+    try {
+      setSolved(
+        JSON.parse(localStorage.getItem('4bilder1konzept_solved') ?? '')
+      )
+    } catch (e) {
+      setSolved([])
+    }
+  }, [])
+
+  if (!solved) return null
+
   return (
     <>
-      <Line from={1} />
-      <Line from={6} />
-      <Line from={11} />
-      <Line from={16} />
+      {[1, 6, 11, 16].map((f) => (
+        <Line from={f} key={f} solved={solved} />
+      ))}
     </>
   )
 }
 
-function Line({ from }: { from: number }) {
+function Line({ from, solved }: { from: number; solved: number[] }) {
   return (
     <div className="flex justify-between mt-6">
-      <Cell id={from} />
-      <Cell id={from + 1} />
-      <Cell id={from + 2} />
-      <Cell id={from + 3} />
-      <Cell id={from + 4} />
+      {[0, 1, 2, 3, 4].map((i) => (
+        <Cell id={from + i} solved={solved.includes(from + i)} key={i} />
+      ))}
     </div>
   )
 }
 
-function Cell({ id }: { id: number }) {
+function Cell({ id, solved }: { id: number; solved: boolean }) {
   return (
     <Link href={`/play/${id}`}>
       <a>
         <div
           className={clsx(
-            'w-12 h-12 rounded-full bg-gray-100',
+            'w-12 h-12 rounded-full',
             'flex justify-center items-center',
-            'select-none hover:bg-emerald-100'
+            'select-none ',
+            solved
+              ? 'bg-green-300'
+              : 'bg-gray-100 hover:bg-white hover:border-2'
           )}
         >
           {id}

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Level, Levels } from '../../levels'
-import bcrypt from 'bcryptjs'
+import Script from 'next/script'
 
 export default function LevelPage({ id, level }: { level: Level; id: string }) {
   return (
@@ -13,6 +13,7 @@ export default function LevelPage({ id, level }: { level: Level; id: string }) {
       <Head>
         <title>Level {id} | 4 bilder 1 konzept</title>
       </Head>
+      <Script src="/scripts/bcrypt.min.js"></Script>
       <div className="max-w-md mx-auto" key={id}>
         <div className="mt-6">
           <Link href="/">
@@ -131,17 +132,33 @@ function Letters({ level, id }: { level: Level; id: number }) {
     if (selection.every((x) => x != -1)) {
       // check
       const answer = selection.map((x) => level.letters[x]).join('')
-      bcrypt.compare(answer, level.answerHash).then((ok) => {
-        if (ok) {
-          setMode('correct')
-        } else {
-          setMode('wrong')
-        }
-      })
+      ;(window as any).dcodeIO.bcrypt
+        .compare(answer, level.answerHash)
+        .then((ok: boolean) => {
+          if (ok) {
+            setMode('correct')
+            try {
+              const solved: number[] = JSON.parse(
+                localStorage.getItem('4bilder1konzept_solved') ?? ''
+              )
+              if (!solved.includes(id)) {
+                solved.push(id)
+              }
+              localStorage.setItem(
+                '4bilder1konzept_solved',
+                JSON.stringify(solved)
+              )
+            } catch (e) {
+              localStorage.setItem('4bilder1konzept_solved', `[${id}]`)
+            }
+          } else {
+            setMode('wrong')
+          }
+        })
     } else {
       setMode('input')
     }
-  }, [selection, level])
+  }, [selection, level, id])
 
   return (
     <>

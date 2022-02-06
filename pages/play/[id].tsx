@@ -51,7 +51,7 @@ function Images({ images }: { images: Level['images'] }) {
   if (hightlightImageSrc) {
     return (
       <div
-        className="w-[350px] mx-auto h-[363px] cursor-pointer"
+        className="w-[352px] mx-auto h-[363px] cursor-pointer border pt-1"
         onClick={() => setHighlight(undefined)}
       >
         <Image
@@ -65,7 +65,7 @@ function Images({ images }: { images: Level['images'] }) {
   }
 
   return (
-    <div className="w-[350px] mx-auto">
+    <div className="w-[352px] mx-auto">
       <div className="flex justify-between">
         <div
           className="border cursor-pointer"

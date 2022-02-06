@@ -55,17 +55,20 @@ export interface Level {
   answerHash: string // use 9 rounds for good performance
 }
 
+// tools: https://onlinerandomtools.com/shuffle-lines
+// https://bcrypt.online/
+
 export const Levels: { [index: string]: Level } = {
   1: {
     images: {
-      imageA: '/images/test.png',
-      imageB: '/images/test.png',
-      imageC: '/images/test.png',
-      imageD: '/images/test.png',
+      imageA: '/images/1A.png',
+      imageB: '/images/1B.png',
+      imageC: '/images/1C.png',
+      imageD: '/images/1D.png',
     },
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 4,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
+    letters: ['D', 'F', 'E', 'G', 'Q', 'H', 'Ä', 'E', 'K', 'A', 'R', 'Z'],
+    answerLength: 6,
+    answerHash: '$2y$09$3u9xxZQ3mCMISEyZF6Fot.66J76t9kB9DBkd/uQi1YyTKNAP/nsQu',
   },
   2: {
     images: {

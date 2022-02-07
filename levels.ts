@@ -72,14 +72,14 @@ export const Levels: { [index: string]: Level } = {
   },
   2: {
     images: {
-      imageA: '/images/test.png',
-      imageB: '/images/test.png',
-      imageC: '/images/test.png',
-      imageD: '/images/test.png',
+      imageA: '/images/2A.png',
+      imageB: '/images/2B.png',
+      imageC: '/images/2C.png',
+      imageD: '/images/2D.png',
     },
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 4,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
+    letters: ['L', 'P', 'A', 'M', 'Ö', 'M', 'U', 'S', 'D', 'E', 'E', 'D'],
+    answerLength: 5,
+    answerHash: '$2y$09$LrUDXtg34QpUJ20TluTXLOOLHKylFjErZT1fmDNRv7ol5fHCYHw8u',
   },
   3: {
     images: {

@@ -15,7 +15,7 @@ export default function LevelPage({ id, level }: { level: Level; id: string }) {
       </Head>
       <Script src="/scripts/bcrypt.min.js"></Script>
       <div className="max-w-md mx-auto" key={id}>
-        <div className="mt-6">
+        <div className="sm:mt-6 mt-4 sm:ml-0 ml-4">
           <Link href="/">
             <a>
               <button className="py-0.5 px-1 pr-2 rounded-full bg-gray-100 hover:bg-gray-200">
@@ -24,7 +24,9 @@ export default function LevelPage({ id, level }: { level: Level; id: string }) {
             </a>
           </Link>
         </div>
-        <h1 className="text-center text-3xl mt-4 mb-8">Level {id}</h1>
+        <h1 className="text-center text-3xl sm:mt-4 sm:mb-8 mb-4 mt-2">
+          Level {id}
+        </h1>
         <Images images={level.images} />
         <Letters level={level} id={parseInt(id) ?? -1} />
       </div>
@@ -52,20 +54,16 @@ function Images({ images }: { images: Level['images'] }) {
     return (
       <div
         className="w-[352px] mx-auto h-[363px] cursor-pointer border pt-1"
+        style={{ WebkitTapHighlightColor: 'transparent' }}
         onClick={() => setHighlight(undefined)}
       >
-        <Image
-          src={hightlightImageSrc}
-          alt={`Bild ${highlight}`}
-          width={350}
-          height={350}
-        ></Image>
+        <Image src={hightlightImageSrc} alt="" width={350} height={350}></Image>
       </div>
     )
   }
 
   return (
-    <div className="w-[352px] mx-auto">
+    <div className="w-[352px] mx-auto h-[363px]">
       <div className="flex justify-between">
         <div
           className="border cursor-pointer"
@@ -73,9 +71,10 @@ function Images({ images }: { images: Level['images'] }) {
         >
           <Image
             src={images.imageA}
-            alt="Bild A"
+            alt=""
             width={160}
             height={160}
+            priority
           ></Image>
         </div>
         <div
@@ -84,9 +83,10 @@ function Images({ images }: { images: Level['images'] }) {
         >
           <Image
             src={images.imageB}
-            alt="Bild A"
+            alt=""
             width="160"
             height="160"
+            priority
           ></Image>
         </div>
       </div>
@@ -97,9 +97,10 @@ function Images({ images }: { images: Level['images'] }) {
         >
           <Image
             src={images.imageC}
-            alt="Bild A"
+            alt=""
             width={160}
             height={160}
+            priority
           ></Image>
         </div>
         <div
@@ -108,9 +109,10 @@ function Images({ images }: { images: Level['images'] }) {
         >
           <Image
             src={images.imageD}
-            alt="Bild A"
+            alt=""
             width="160"
             height="160"
+            priority
           ></Image>
         </div>
       </div>
@@ -162,7 +164,7 @@ function Letters({ level, id }: { level: Level; id: number }) {
 
   return (
     <>
-      <div className="mt-12 mx-auto flex justify-center gap-2">
+      <div className="sm:mt-12 mt-8 mx-auto flex justify-center gap-2">
         {new Array(level.answerLength).fill(0).map((_, i) => (
           <div
             className={clsx(
@@ -195,7 +197,7 @@ function Letters({ level, id }: { level: Level; id: number }) {
           </Link>
         </div>
       ) : (
-        <div className="mt-12 w-[350px] mx-auto">
+        <div className="sm:mt-12 mt-8 w-[350px] mx-auto">
           <div className="flex justify-between">
             {[0, 1, 2, 3, 4, 5].map((i) => renderCell(i))}
           </div>

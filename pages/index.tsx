@@ -33,19 +33,9 @@ function Grid() {
   if (!solved) return null
 
   return (
-    <>
-      {[1, 6, 11, 16].map((f) => (
-        <Line from={f} key={f} solved={solved} />
-      ))}
-    </>
-  )
-}
-
-function Line({ from, solved }: { from: number; solved: number[] }) {
-  return (
-    <div className="flex justify-between mt-6">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <Cell id={from + i} solved={solved.includes(from + i)} key={i} />
+    <div className="grid sm:grid-cols-5 sm:gap-6 sm:gap-y-8 grid-cols-4 gap-y-5">
+      {new Array(20).fill(0).map((_, i) => (
+        <Cell id={i + 1} solved={solved.includes(i + 1)} key={i + 1} />
       ))}
     </div>
   )
@@ -53,21 +43,23 @@ function Line({ from, solved }: { from: number; solved: number[] }) {
 
 function Cell({ id, solved }: { id: number; solved: boolean }) {
   return (
-    <Link href={`/play/${id}`}>
-      <a>
-        <div
-          className={clsx(
-            'w-12 h-12 rounded-full',
-            'flex justify-center items-center',
-            'select-none ',
-            solved
-              ? 'bg-green-300'
-              : 'bg-gray-100 hover:bg-white hover:border-2'
-          )}
-        >
-          {id}
-        </div>
-      </a>
-    </Link>
+    <div className="flex justify-center">
+      <Link href={`/play/${id}`}>
+        <a className="block w-12 h-12">
+          <div
+            className={clsx(
+              'h-full w-full rounded-full',
+              'flex justify-center items-center',
+              'select-none ',
+              solved
+                ? 'bg-green-300'
+                : 'bg-gray-100 hover:bg-white hover:border-2'
+            )}
+          >
+            {id}
+          </div>
+        </a>
+      </Link>
+    </div>
   )
 }

@@ -168,11 +168,12 @@ function Letters({ level, id }: { level: Level; id: number }) {
         {new Array(level.answerLength).fill(0).map((_, i) => (
           <div
             className={clsx(
-              'w-8 h-8 border-2 border-gray-400 dark:bg-neutral-700',
+              'w-8 h-8 border-2 border-gray-400',
               'flex justify-center items-center text-xl select-none',
               selection[i] >= 0 && mode != 'correct' && 'cursor-pointer',
-              mode == 'wrong' && 'bg-orange-400',
-              mode == 'correct' && 'bg-green-300'
+              mode == 'wrong' && 'bg-orange-400 dark:bg-orange-800',
+              mode == 'correct' && 'bg-green-300 dark:bg-green-800',
+              mode == 'input' && 'dark:bg-neutral-700'
             )}
             key={i}
             onClick={() => {
@@ -190,7 +191,7 @@ function Letters({ level, id }: { level: Level; id: number }) {
         <div className="mt-8 flex justify-center">
           <Link href={`/play/${id + 1}`}>
             <a>
-              <button className="py-1 px-3 rounded-full bg-green-200 hover:bg-green-300">
+              <button className="py-1 px-3 rounded-full bg-green-200 dark:bg-green-800 hover:bg-green-300">
                 nächstes Level
               </button>
             </a>

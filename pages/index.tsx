@@ -10,7 +10,9 @@ export default function Home() {
         <title>4 bilder 1 konzept</title>
       </Head>
       <div className="max-w-md mx-auto">
-        <h1 className="text-center text-4xl mt-16 mb-16">4 bilder 1 konzept</h1>
+        <h1 className="text-center text-4xl mt-16 mb-16 dark:text-white">
+          4 bilder 1 konzept
+        </h1>
         <Grid />
       </div>
     </>
@@ -50,10 +52,10 @@ function Cell({ id, solved }: { id: number; solved: boolean }) {
             className={clsx(
               'h-full w-full rounded-full',
               'flex justify-center items-center',
-              'select-none ',
+              'select-none dark:text-white',
               solved
                 ? 'bg-green-300'
-                : 'bg-gray-100 hover:bg-white hover:border-2'
+                : 'bg-gray-100 hover:bg-white hover:border-2 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:hover:border-neutral-600'
             )}
           >
             {id}

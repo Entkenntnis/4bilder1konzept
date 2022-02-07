@@ -18,13 +18,13 @@ export default function LevelPage({ id, level }: { level: Level; id: string }) {
         <div className="sm:mt-6 mt-4 sm:ml-0 ml-4">
           <Link href="/">
             <a>
-              <button className="py-0.5 px-1 pr-2 rounded-full bg-gray-100 hover:bg-gray-200">
+              <button className="py-0.5 px-1 pr-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:text-white dark:bg-neutral-800 dark:hover:bg-neutral-700">
                 ᐸ Übersicht
               </button>
             </a>
           </Link>
         </div>
-        <h1 className="text-center text-3xl sm:mt-4 sm:mb-8 mb-4 mt-2">
+        <h1 className="text-center text-3xl sm:mt-4 sm:mb-8 mb-4 mt-2 dark:text-white">
           Level {id}
         </h1>
         <Images images={level.images} />
@@ -53,7 +53,7 @@ function Images({ images }: { images: Level['images'] }) {
   if (hightlightImageSrc) {
     return (
       <div
-        className="w-[352px] mx-auto h-[363px] cursor-pointer border pt-1"
+        className="w-[352px] mx-auto h-[363px] cursor-pointer border pt-1 bg-white"
         style={{ WebkitTapHighlightColor: 'transparent' }}
         onClick={() => setHighlight(undefined)}
       >
@@ -66,7 +66,7 @@ function Images({ images }: { images: Level['images'] }) {
     <div className="w-[352px] mx-auto h-[363px]">
       <div className="flex justify-between">
         <div
-          className="border cursor-pointer"
+          className="border cursor-pointer bg-white"
           onClick={() => setHighlight('A')}
         >
           <Image
@@ -78,7 +78,7 @@ function Images({ images }: { images: Level['images'] }) {
           ></Image>
         </div>
         <div
-          className="border cursor-pointer"
+          className="border cursor-pointer bg-white"
           onClick={() => setHighlight('B')}
         >
           <Image
@@ -90,9 +90,9 @@ function Images({ images }: { images: Level['images'] }) {
           ></Image>
         </div>
       </div>
-      <div className="flex justify-between mt-7">
+      <div className="flex justify-between mt-7 ">
         <div
-          className="border cursor-pointer"
+          className="border cursor-pointer bg-white"
           onClick={() => setHighlight('C')}
         >
           <Image
@@ -104,7 +104,7 @@ function Images({ images }: { images: Level['images'] }) {
           ></Image>
         </div>
         <div
-          className="border cursor-pointer"
+          className="border cursor-pointer bg-white"
           onClick={() => setHighlight('D')}
         >
           <Image
@@ -122,7 +122,7 @@ function Images({ images }: { images: Level['images'] }) {
 
 function Letters({ level, id }: { level: Level; id: number }) {
   const letterStyle =
-    /* className={ */ 'w-8 h-8 border flex justify-center items-center select-none'
+    /* className={ */ 'w-8 h-8 border flex justify-center items-center select-none dark:text-white'
 
   const [selection, setSelection] = useState<number[]>(
     new Array(level.answerLength).fill(-1)
@@ -164,11 +164,11 @@ function Letters({ level, id }: { level: Level; id: number }) {
 
   return (
     <>
-      <div className="sm:mt-12 mt-8 mx-auto flex justify-center gap-2">
+      <div className="sm:mt-12 mt-8 mx-auto flex justify-center gap-2 dark:text-white">
         {new Array(level.answerLength).fill(0).map((_, i) => (
           <div
             className={clsx(
-              'w-8 h-8 border-2 border-gray-400',
+              'w-8 h-8 border-2 border-gray-400 dark:bg-neutral-700',
               'flex justify-center items-center text-xl select-none',
               selection[i] >= 0 && mode != 'correct' && 'cursor-pointer',
               mode == 'wrong' && 'bg-orange-400',

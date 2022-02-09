@@ -164,16 +164,22 @@ function Letters({ level, id }: { level: Level; id: number }) {
 
   return (
     <>
-      <div className="sm:mt-12 mt-8 mx-auto flex justify-center gap-2 dark:text-white">
+      <div
+        className={clsx(
+          'sm:mt-12 mt-8 mx-auto flex justify-center  dark:text-white',
+          level.answerLength > 10 ? 'gap-1' : 'gap-2'
+        )}
+      >
         {new Array(level.answerLength).fill(0).map((_, i) => (
           <div
             className={clsx(
-              'w-8 h-8 border-2 border-gray-400',
+              'border-gray-400',
               'flex justify-center items-center text-xl select-none',
               selection[i] >= 0 && mode != 'correct' && 'cursor-pointer',
               mode == 'wrong' && 'bg-orange-400 dark:bg-orange-800',
               mode == 'correct' && 'bg-green-300 dark:bg-green-800',
-              mode == 'input' && 'dark:bg-neutral-700'
+              mode == 'input' && 'dark:bg-neutral-700',
+              level.answerLength > 10 ? 'w-7 h-7 border' : 'w-8 h-8 border-2'
             )}
             key={i}
             onClick={() => {

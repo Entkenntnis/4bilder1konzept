@@ -51,7 +51,7 @@ export interface Level {
     Char,
     Char
   ]
-  answerLength: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  answerLength: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
   answerHash: string // use 9 rounds for good performance
 }
 
@@ -83,25 +83,25 @@ export const Levels: { [index: string]: Level } = {
   },
   3: {
     images: {
-      imageA: '/images/test.png',
-      imageB: '/images/test.png',
-      imageC: '/images/test.png',
-      imageD: '/images/test.png',
+      imageA: '/images/3A.png',
+      imageB: '/images/3B.png',
+      imageC: '/images/3C.png',
+      imageD: '/images/3D.png',
     },
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 4,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
+    letters: ['L', 'U', 'I', 'E', 'W', 'S', 'Z', 'E', 'P', 'L', 'Ü', 'R'],
+    answerLength: 5,
+    answerHash: '$2y$09$9MVWOgsYdnLaTTwg9FVJ7ewoue7kzr1G9.tal8BhvN7R9.chgdyyW',
   },
   4: {
     images: {
-      imageA: '/images/test.png',
-      imageB: '/images/test.png',
-      imageC: '/images/test.png',
-      imageD: '/images/test.png',
+      imageA: '/images/4A.png',
+      imageB: '/images/4B.png',
+      imageC: '/images/4C.png',
+      imageD: '/images/4D.png',
     },
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 4,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
+    letters: ['M', 'S', 'C', 'H', 'Y', 'E', 'I', 'M', 'S', 'X', 'R', 'T'],
+    answerLength: 11,
+    answerHash: '$2y$09$56ttEpQIIlMemnV6d6xESufu9iRiH2yk7jNh5daCSAmwKF5ouq3cW',
   },
   5: {
     images: {

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import clsx from 'clsx'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -57,7 +58,7 @@ function Images({ images }: { images: Level['images'] }) {
         style={{ WebkitTapHighlightColor: 'transparent' }}
         onClick={() => setHighlight(undefined)}
       >
-        <Image src={hightlightImageSrc} alt="" width={350} height={350}></Image>
+        <img src={hightlightImageSrc} alt="" width={350} height={350}></img>
       </div>
     )
   }
@@ -69,25 +70,13 @@ function Images({ images }: { images: Level['images'] }) {
           className="border cursor-pointer bg-white"
           onClick={() => setHighlight('A')}
         >
-          <Image
-            src={images.imageA}
-            alt=""
-            width={160}
-            height={160}
-            priority
-          ></Image>
+          <img src={images.imageA} alt="" width={160} height={160}></img>
         </div>
         <div
           className="border cursor-pointer bg-white"
           onClick={() => setHighlight('B')}
         >
-          <Image
-            src={images.imageB}
-            alt=""
-            width="160"
-            height="160"
-            priority
-          ></Image>
+          <img src={images.imageB} alt="" width="160" height="160"></img>
         </div>
       </div>
       <div className="flex justify-between mt-7 ">
@@ -95,25 +84,13 @@ function Images({ images }: { images: Level['images'] }) {
           className="border cursor-pointer bg-white"
           onClick={() => setHighlight('C')}
         >
-          <Image
-            src={images.imageC}
-            alt=""
-            width={160}
-            height={160}
-            priority
-          ></Image>
+          <img src={images.imageC} alt="" width={160} height={160}></img>
         </div>
         <div
           className="border cursor-pointer bg-white"
           onClick={() => setHighlight('D')}
         >
-          <Image
-            src={images.imageD}
-            alt=""
-            width="160"
-            height="160"
-            priority
-          ></Image>
+          <img src={images.imageD} alt="" width="160" height="160"></img>
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function LevelPage({ id, level }: { level: Level; id: string }) {
         <title>Level {id} | 4 bilder 1 konzept</title>
       </Head>
       <Script src="/scripts/bcrypt.min.js"></Script>
-      <div className="max-w-md mx-auto" key={id}>
+      <div className="max-w-md mx-auto mb-6" key={id}>
         <div className="sm:mt-6 mt-4 sm:ml-0 ml-4">
           <Link href="/">
             <a>

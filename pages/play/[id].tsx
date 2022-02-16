@@ -25,33 +25,51 @@ export default function LevelPage({ lvl, level }: LevelPageProps) {
       </Head>
       <Script src="/scripts/bcrypt.min.js"></Script>
       {mode == 'consent' && (
-        <div className="max-w-md mx-auto mb-6">
-          <h1 className="text-center text-3xl sm:mt-4 sm:mb-8 mb-4 mt-10 dark:text-white">
-            Fortschritt speichern
-          </h1>
-          <p>Soll der Fortschritt gespeichert werden?</p>
-          <p>
-            <button
-              onClick={() => {
-                setConsent(true)
-                setMode('play')
-                addLevel(level.id)
-              }}
-            >
-              Ja
-            </button>
-          </p>
-          <p>
-            <button
-              onClick={() => {
-                setConsent(false)
-                setMode('play')
-                addLevel(level.id)
-              }}
-            >
-              Nein
-            </button>
-          </p>
+        <div className="max-w-md mx-auto m-6 mt-12 dark:text-white">
+          <div className="border-2 rounded-xl p-3 mx-2">
+            <h1 className="text-center text-3xl sm:mt-4 sm:mb-8 mb-4 mt-10 dark:text-white">
+              Einverständnis
+            </h1>
+            <p>
+              Wir benötigen dein Einverständnis, um entsprechend der{' '}
+              <Link href="/privacy">
+                <a className="text-blue-600 dark:text-blue-400">
+                  Datenschutzerklärung
+                </a>
+              </Link>{' '}
+              Daten auf diesem Gerät zu speichern. Dadurch kannst du zu einem
+              späteren Zeitpunkt an den Aufgaben weiterarbeiten und erhältst
+              eine Übersicht auf deine gelösten Aufgaben.
+            </p>
+            <p>
+              <button
+                onClick={() => {
+                  setConsent()
+                  setMode('play')
+                  addLevel(level.id)
+                }}
+                className={clsx(
+                  'w-full bg-green-300 p-2 rounded-xl',
+                  'mt-4 dark:bg-green-800'
+                )}
+              >
+                Fortschritt auf diesem Gerät speichern
+              </button>
+            </p>
+            <p>
+              <button
+                onClick={() => {
+                  setMode('play')
+                }}
+                className={clsx(
+                  'w-full bg-neutral-200 p-2 rounded-xl',
+                  'mt-4 dark:bg-neutral-700'
+                )}
+              >
+                zurück
+              </button>
+            </p>
+          </div>
         </div>
       )}
       <div
@@ -171,7 +189,7 @@ interface LettersProps {
 function Letters({ level, lvl, setPageMode, pageMode }: LettersProps) {
   const id = lvl
   const letterStyle =
-    /* className={ */ 'w-8 h-8 border flex justify-center items-center select-none dark:text-white'
+    /* className={ */ 'w-8 h-8 border flex justify-center items-center select-none dark:text-white' /*}*/
 
   const [selection, setSelection] = useState<number[]>(
     new Array(level.answerLength).fill(-1)
@@ -238,9 +256,9 @@ function Letters({ level, lvl, setPageMode, pageMode }: LettersProps) {
           <Link href={`/play/${id + 1}`}>
             <a>
               <button
-                className="py-1 px-3 rounded-full bg-green-200 dark:bg-green-800 hover:bg-green-300"
+                className="py-1 px-3 rounded-full bg-green-200 dark:bg-green-800 dark:hover:bg-green-600 dark:text-white"
                 onClick={(e) => {
-                  if (pageMode == 'beforeConsent') {
+                  if (needsConsent()) {
                     e.preventDefault()
                     setPageMode('consent')
                   }

@@ -1,14 +1,11 @@
 // helper methods for accessing device storage
 
-const progressStorageKey = '4bilder1konzept_progress' // int[], local or session
-const consentStorageKey = '4bilder1konzept_consent' // localStorage: user id, sessionStorage: "false"
+const progressStorageKey = '4bilder1konzept_progress'
+const consentStorageKey = '4bilder1konzept_consent'
 
 // index page, after mount, which ids to highlight
 export function loadProgress(): number[] {
-  const ls = localStorage.getItem(progressStorageKey)
-  const ses = sessionStorage.getItem(progressStorageKey)
-
-  const storageVal = ls ?? ses
+  const storageVal = localStorage.getItem(progressStorageKey)
 
   if (storageVal === null) return []
 
@@ -25,29 +22,22 @@ export function loadProgress(): number[] {
 
   // no success, reset storage
   localStorage.removeItem(progressStorageKey)
-  sessionStorage.removeItem(progressStorageKey)
   return []
 }
 
 // play page, after correct answer, is any consent given?
 export function needsConsent(): boolean {
   const ls = localStorage.getItem(consentStorageKey)
-  const ses = sessionStorage.getItem(consentStorageKey)
 
-  if (!ls && !ses) return true
+  if (!ls) return true
 
   return false
 }
 
-// player has made choice, true or false
-export function setConsent(val: boolean) {
-  if (val) {
-    localStorage.setItem(consentStorageKey, Math.random().toString())
-    localStorage.setItem(progressStorageKey, '[]')
-  } else {
-    sessionStorage.setItem(consentStorageKey, 'false')
-    sessionStorage.setItem(progressStorageKey, '[]')
-  }
+// player allows local storage
+export function setConsent() {
+  localStorage.setItem(consentStorageKey, Math.random().toString())
+  localStorage.setItem(progressStorageKey, '[]')
 }
 
 // player has solved a level
@@ -56,16 +46,11 @@ export function addLevel(id: number) {
 
   const progress = loadProgress()
   if (!progress.includes(id)) {
-    if (localStorage.getItem(progressStorageKey)) {
-      localStorage.setItem(
-        progressStorageKey,
-        JSON.stringify([...progress, id])
-      )
-    } else {
-      sessionStorage.setItem(
-        progressStorageKey,
-        JSON.stringify([...progress, id])
-      )
-    }
+    localStorage.setItem(progressStorageKey, JSON.stringify([...progress, id]))
   }
+}
+
+export function clearData() {
+  localStorage.removeItem(consentStorageKey)
+  localStorage.removeItem(progressStorageKey)
 }

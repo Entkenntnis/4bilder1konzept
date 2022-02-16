@@ -1,16 +1,11 @@
 import clsx from 'clsx'
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { levelData, Levels } from '../levels'
+import { levelData } from '../levels'
 import { loadProgress } from '../src/data'
 
-interface HomeProps {
-  levels: Levels
-}
-
-export default function Home({ levels }: HomeProps) {
+export default function Home() {
   return (
     <>
       <Head>
@@ -20,17 +15,13 @@ export default function Home({ levels }: HomeProps) {
         <h1 className="text-center text-4xl mt-16 mb-16 dark:text-white">
           4 bilder 1 konzept
         </h1>
-        <Grid levels={levels} />
+        <Grid />
       </div>
     </>
   )
 }
 
-interface GridProps {
-  levels: Levels
-}
-
-function Grid({ levels }: GridProps) {
+function Grid() {
   const [solved, setSolved] = useState<number[] | undefined>(undefined)
 
   useEffect(() => {
@@ -39,7 +30,7 @@ function Grid({ levels }: GridProps) {
 
   if (!solved) return null
 
-  const keys = Object.keys(levels).map((x) => parseInt(x))
+  const keys = Object.keys(levelData).map((x) => parseInt(x))
   keys.sort((a, b) => a - b)
 
   return (
@@ -51,7 +42,11 @@ function Grid({ levels }: GridProps) {
         )}
       >
         {keys.map((lvl) => (
-          <Cell lvl={lvl} solved={solved.includes(levels[lvl].id)} key={lvl} />
+          <Cell
+            lvl={lvl}
+            solved={solved.includes(levelData[lvl].id)}
+            key={lvl}
+          />
         ))}
       </div>
       <div className="mt-16 text-center text-neutral-500 text-xs">
@@ -98,10 +93,4 @@ function Cell({ lvl, solved }: CellProps) {
       </Link>
     </div>
   )
-}
-
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  return {
-    props: { levels: levelData }, // will be passed to the page component as props
-  }
 }

@@ -43,8 +43,10 @@ export function needsConsent(): boolean {
 export function setConsent(val: boolean) {
   if (val) {
     localStorage.setItem(consentStorageKey, Math.random().toString())
+    localStorage.setItem(progressStorageKey, '[]')
   } else {
     sessionStorage.setItem(consentStorageKey, 'false')
+    sessionStorage.setItem(progressStorageKey, '[]')
   }
 }
 

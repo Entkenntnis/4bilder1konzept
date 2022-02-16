@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Level, Levels } from '../../levels'
+import { Level, levelData } from '../../levels'
 import Script from 'next/script'
 
 export default function LevelPage({ id, level }: { level: Level; id: string }) {
@@ -228,13 +228,13 @@ function Letters({ level, id }: { level: Level; id: number }) {
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id as string
   return {
-    props: { id, level: Levels[id] }, // will be passed to the page component as props
+    props: { id, level: levelData[id] }, // will be passed to the page component as props
   }
 }
 
 export async function getStaticPaths() {
   return {
-    paths: Object.keys(Levels).map((id) => ({ params: { id } })),
+    paths: Object.keys(levelData).map((id) => ({ params: { id } })),
     fallback: false,
   }
 }

@@ -3,10 +3,14 @@ import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Level, Levels } from '../levels'
+import { levelData, Levels } from '../levels'
 import { loadProgress } from '../src/data'
 
-export default function Home(props: { levels: Level }) {
+interface HomeProps {
+  levels: Levels
+}
+
+export default function Home({ levels }: HomeProps) {
   return (
     <>
       <Head>
@@ -16,13 +20,17 @@ export default function Home(props: { levels: Level }) {
         <h1 className="text-center text-4xl mt-16 mb-16 dark:text-white">
           4 bilder 1 konzept
         </h1>
-        <Grid levels={props.levels} />
+        <Grid levels={levels} />
       </div>
     </>
   )
 }
 
-function Grid({ levels }: { levels: Level }) {
+interface GridProps {
+  levels: Levels
+}
+
+function Grid({ levels }: GridProps) {
   const [solved, setSolved] = useState<number[] | undefined>(undefined)
 
   useEffect(() => {
@@ -31,18 +39,19 @@ function Grid({ levels }: { levels: Level }) {
 
   if (!solved) return null
 
-  const keys = Object.keys(levels)
-  keys.sort((a, b) => parseInt(a) - parseInt(b))
+  const keys = Object.keys(levels).map((x) => parseInt(x))
+  keys.sort((a, b) => a - b)
 
   return (
     <>
-      <div className="grid sm:grid-cols-5 sm:gap-6 sm:gap-y-8 grid-cols-4 gap-y-5">
-        {Object.keys(levels).map((key) => (
-          <Cell
-            id={parseInt(key)}
-            solved={solved.includes(levels.id)}
-            key={key}
-          />
+      <div
+        className={clsx(
+          'grid sm:grid-cols-5 sm:gap-6 sm:gap-y-8',
+          'grid-cols-4 gap-y-5'
+        )}
+      >
+        {keys.map((lvl) => (
+          <Cell lvl={lvl} solved={solved.includes(levels[lvl].id)} key={lvl} />
         ))}
       </div>
       <div className="mt-16 text-center text-neutral-500 text-xs">
@@ -62,10 +71,15 @@ function Grid({ levels }: { levels: Level }) {
   )
 }
 
-function Cell({ id, solved }: { id: number; solved: boolean }) {
+interface CellProps {
+  lvl: number
+  solved: boolean
+}
+
+function Cell({ lvl, solved }: CellProps) {
   return (
     <div className="flex justify-center">
-      <Link href={`/play/${id}`} prefetch={false}>
+      <Link href={`/play/${lvl}`} prefetch={false}>
         <a className="block w-12 h-12">
           <div
             className={clsx(
@@ -74,10 +88,11 @@ function Cell({ id, solved }: { id: number; solved: boolean }) {
               'select-none dark:text-white',
               solved
                 ? 'bg-green-300 dark:bg-green-800'
-                : 'bg-gray-100 hover:bg-white hover:border-2 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:hover:border-neutral-600'
+                : 'bg-gray-100 hover:bg-white hover:border-2 ' +
+                    'dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:hover:border-neutral-600'
             )}
           >
-            {id}
+            {lvl}
           </div>
         </a>
       </Link>
@@ -85,8 +100,8 @@ function Cell({ id, solved }: { id: number; solved: boolean }) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   return {
-    props: { levels: Levels }, // will be passed to the page component as props
+    props: { levels: levelData }, // will be passed to the page component as props
   }
 }

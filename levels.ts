@@ -56,10 +56,12 @@ export interface Level {
   id: number // unique and persistent identifier of a level
 }
 
+export type Levels = { [index: string]: Level }
+
 // tools: https://onlinerandomtools.com/shuffle-lines
 // https://bcrypt.online/
 
-export const Levels: { [index: string]: Level } = {
+export const levelData: Levels = {
   1: {
     images: {
       imageA: '/images/1A.png',

@@ -9,21 +9,7 @@ export default function Reset() {
       {!loaded ? (
         <>
           <p className="dark:text-white">
-            Fortschritt auf diesem Gerät zurücksetzen?
-          </p>
-          <p className="mt-4 text-center">
-            <button
-              className="px-5 py-1 bg-orange-400 rounded"
-              onClick={() => {
-                const res = confirm('Fortschritt zurücksetzen?')
-                if (res) {
-                  localStorage.removeItem('4bilder1konzept_solved')
-                  setLoaded(true)
-                }
-              }}
-            >
-              Ja
-            </button>
+            HALLO, das hier ist die Datenschutzerklärung
           </p>
         </>
       ) : (

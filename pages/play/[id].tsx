@@ -6,7 +6,13 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Level, levelData } from '../../levels'
 import Script from 'next/script'
-import { addLevel, needsConsent, setConsent } from '../../src/data'
+import {
+  addLevel,
+  loadProgress,
+  needsConsent,
+  setConsent,
+} from '../../src/data'
+import { useRouter } from 'next/router'
 
 type Modes = 'play' | 'beforeConsent' | 'consent'
 
@@ -17,6 +23,24 @@ interface LevelPageProps {
 
 export default function LevelPage({ lvl, level }: LevelPageProps) {
   const [mode, setMode] = useState<Modes>('play')
+  const [nextLevel, setNextLevel] = useState<number>(-1)
+  const router = useRouter()
+
+  useEffect(() => {
+    const progress = loadProgress()
+    const levels = Object.keys(levelData)
+    let currentIndex = levels.indexOf(lvl.toString()) + 1
+    for (;;) {
+      if (currentIndex >= levels.length) {
+        return
+      }
+      if (!progress.includes(levelData[levels[currentIndex]].id)) {
+        setNextLevel(parseInt(levels[currentIndex]))
+        return
+      }
+      currentIndex++
+    }
+  }, [lvl])
 
   return (
     <>
@@ -45,8 +69,9 @@ export default function LevelPage({ lvl, level }: LevelPageProps) {
               <button
                 onClick={() => {
                   setConsent()
-                  setMode('play')
                   addLevel(level.id)
+                  if (nextLevel > 0) router.push(`/play/${nextLevel}`)
+                  else setMode('play')
                 }}
                 className={clsx(
                   'w-full bg-green-300 p-2 rounded-xl',
@@ -109,7 +134,7 @@ export default function LevelPage({ lvl, level }: LevelPageProps) {
           level={level}
           lvl={lvl}
           setPageMode={setMode}
-          pageMode={mode}
+          nextLevel={nextLevel}
         />
       </div>
     </>
@@ -183,10 +208,10 @@ interface LettersProps {
   level: Level
   lvl: number
   setPageMode: (mode: Modes) => void
-  pageMode: Modes
+  nextLevel: number
 }
 
-function Letters({ level, lvl, setPageMode, pageMode }: LettersProps) {
+function Letters({ level, lvl, setPageMode, nextLevel }: LettersProps) {
   const id = lvl
   const letterStyle =
     /* className={ */ 'w-8 h-8 border flex justify-center items-center select-none dark:text-white' /*}*/
@@ -253,7 +278,7 @@ function Letters({ level, lvl, setPageMode, pageMode }: LettersProps) {
       </div>
       {mode == 'correct' && id < 20 ? (
         <div className="mt-8 flex justify-center">
-          <Link href={`/play/${id + 1}`}>
+          <Link href={nextLevel > 0 ? `/play/${nextLevel}` : '/'}>
             <a>
               <button
                 className="py-1 px-3 rounded-full bg-green-200 dark:bg-green-800 dark:hover:bg-green-600 dark:text-white"

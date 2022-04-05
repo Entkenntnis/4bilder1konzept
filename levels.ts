@@ -1,53 +1,7 @@
-type Char =
-  | 'A'
-  | 'B'
-  | 'C'
-  | 'D'
-  | 'E'
-  | 'F'
-  | 'G'
-  | 'H'
-  | 'I'
-  | 'J'
-  | 'K'
-  | 'L'
-  | 'M'
-  | 'N'
-  | 'O'
-  | 'P'
-  | 'Q'
-  | 'R'
-  | 'S'
-  | 'T'
-  | 'U'
-  | 'V'
-  | 'W'
-  | 'X'
-  | 'Y'
-  | 'Z'
-  | 'Ä'
-  | 'Ö'
-  | 'Ü'
-  | 'ß'
-
 export interface Level {
-  letters: [
-    Char,
-    Char,
-    Char,
-    Char,
-    Char,
-    Char,
-    Char,
-    Char,
-    Char,
-    Char,
-    Char,
-    Char
-  ]
-  answerLength: 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
-  answerHash: string // use 9 rounds for good performance
   id: number // unique and persistent identifier of a level
+  answer: string
+  sources: [string, string, string, string]
 }
 
 export type Levels = { [index: string]: Level }
@@ -57,123 +11,103 @@ export type Levels = { [index: string]: Level }
 
 export const levelData: Levels = {
   1: {
-    letters: ['D', 'F', 'E', 'G', 'Q', 'H', 'Ä', 'E', 'K', 'A', 'R', 'Z'],
-    answerLength: 6,
-    answerHash: '$2y$09$3u9xxZQ3mCMISEyZF6Fot.66J76t9kB9DBkd/uQi1YyTKNAP/nsQu',
     id: 1,
+    answer: 'winkel',
+    sources: ['30258', '1873', '1943', '2109'],
   },
   2: {
-    letters: ['L', 'P', 'A', 'M', 'Ö', 'M', 'U', 'S', 'D', 'E', 'E', 'D'],
-    answerLength: 5,
-    answerHash: '$2y$09$LrUDXtg34QpUJ20TluTXLOOLHKylFjErZT1fmDNRv7ol5fHCYHw8u',
     id: 2,
+    answer: 'klima',
+    sources: ['100130', '74653', '199618', '74653'],
   },
   3: {
-    letters: ['L', 'U', 'I', 'E', 'W', 'S', 'Z', 'E', 'P', 'L', 'Ü', 'R'],
-    answerLength: 5,
-    answerHash: '$2y$09$9MVWOgsYdnLaTTwg9FVJ7ewoue7kzr1G9.tal8BhvN7R9.chgdyyW',
     id: 3,
+    answer: 'bruch',
+    sources: ['26315', '1389', '49468', '1935'],
   },
   4: {
-    letters: ['M', 'S', 'C', 'H', 'Y', 'E', 'I', 'M', 'S', 'X', 'R', 'T'],
-    answerLength: 11,
-    answerHash: '$2y$09$56ttEpQIIlMemnV6d6xESufu9iRiH2yk7jNh5daCSAmwKF5ouq3cW',
     id: 4,
+    answer: 'redox',
+    sources: ['145927', '145927', '157600', '128778'],
   },
   5: {
-    letters: ['A', 'S', 'I', 'G', 'H', 'E', 'D', 'K', 'N', 'W', 'P', 'L'],
-    answerLength: 6,
-    answerHash: '$2y$09$ksCXz2jgmuBAVLcU5JQLLOPQ8axUkSbxzRNcmJGJ9U66kx2nnCYla',
     id: 5,
+    answer: 'code',
+    sources: ['57628', '85858', '70106', '70180'],
   },
   6: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 6,
+    answer: 'zelle',
+    sources: ['71631', '137664', '69555', '65162'],
   },
   7: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 7,
+    answer: 'dreisatz',
+    sources: ['38156', '24369', '24369', '1769'],
   },
   8: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 8,
+    answer: 'periode',
+    sources: ['152324', '2113', '2115', '161873'],
   },
   9: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 9,
+    answer: 'pixel',
+    sources: ['93484', '94377', '59123', '93484'],
   },
   10: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 10,
+    answer: 'plastik',
+    sources: ['224615', '124045', '141140', '108660'],
   },
   11: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 11,
+    answer: 'stress',
+    sources: ['134818', '165214', '139066', '134867'],
   },
   12: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 12,
+    answer: 'ableitung',
+    sources: ['1805', '1304', '26407', '2215'],
   },
   13: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 13,
+    answer: 'forensik',
+    sources: ['202261', '203166', '204711', '223573'],
   },
   14: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 14,
+    answer: 'sinn',
+    sources: ['70830', '64749', '77390', 'serlo'],
   },
   15: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 15,
+    answer: 'klasse',
+    sources: ['57028', '176564', '176662', '64636'],
   },
   16: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 16,
+    answer: 'latein',
+    sources: ['212396', '213865', '228337', '110111'],
   },
   17: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 17,
+    answer: 'tangente',
+    sources: ['24518', '1647', '64134', '2213'],
   },
   18: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 18,
+    answer: 'vier',
+    sources: ['1337', '1875', '95696', '71317'],
   },
   19: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 19,
+    answer: 'atom',
+    sources: ['77187', '154653', '154653', '127465'],
   },
   20: {
-    letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-    answerLength: 5,
-    answerHash: '$2y$09$zW9rN6HmXWNaEB5lCjdELu9EuAHzWQgkcSjYaUK1w18oBmvUrMJJ2',
-    id: -1,
+    id: 20,
+    answer: 'prozent',
+    sources: ['1377', '1627', '38457', '2193'],
   },
 }

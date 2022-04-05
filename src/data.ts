@@ -5,7 +5,7 @@ const consentStorageKey = '4bilder1konzept_consent'
 
 // index page, after mount, which ids to highlight
 export function loadProgress(): number[] {
-  const storageVal = localStorage.getItem(progressStorageKey)
+  const storageVal = sessionStorage.getItem(progressStorageKey)
 
   if (storageVal === null) return []
 
@@ -21,47 +21,30 @@ export function loadProgress(): number[] {
   }
 
   // no success, reset storage
-  localStorage.removeItem(progressStorageKey)
+  sessionStorage.removeItem(progressStorageKey)
   return []
-}
-
-// play page, after correct answer, is any consent given?
-export function needsConsent(): boolean {
-  const ls = localStorage.getItem(consentStorageKey)
-
-  if (!ls) return true
-
-  return false
-}
-
-// player allows local storage
-export function setConsent() {
-  localStorage.setItem(consentStorageKey, Math.random().toString())
-  localStorage.setItem(progressStorageKey, '[]')
 }
 
 // player has solved a level
 export function addLevel(id: number) {
-  if (needsConsent()) return // not doing anything
-
   const progress = loadProgress()
   if (!progress.includes(id)) {
-    localStorage.setItem(progressStorageKey, JSON.stringify([...progress, id]))
-    const userId = localStorage.getItem(consentStorageKey)
+    sessionStorage.setItem(
+      progressStorageKey,
+      JSON.stringify([...progress, id])
+    )
+    let userId = sessionStorage.getItem(consentStorageKey)
+    if (!userId) {
+      userId = Math.random().toString()
+      sessionStorage.setItem(consentStorageKey, userId)
+    }
     if (userId) {
       submit_event(id, userId)
     }
   }
 }
 
-export function clearData() {
-  localStorage.removeItem(consentStorageKey)
-  localStorage.removeItem(progressStorageKey)
-}
-
 function submit_event(quizId: number, userId: string) {
-  //if (window.location.host == 'www.matherhino.de') {
-  // only log on production
   void (async () => {
     const rawResponse = await fetch(
       'https://stats-4bilder1konzept.arrrg.de/submit_event',
@@ -73,8 +56,5 @@ function submit_event(quizId: number, userId: string) {
         body: JSON.stringify({ quizId, userId }),
       }
     )
-    //const content = await rawResponse.text()
-    //console.log(content)
   })()
-  //}
 }

@@ -12,9 +12,10 @@ export default function Home() {
         <title>4 bilder 1 konzept</title>
       </Head>
       <div className="max-w-md mx-auto mb-4">
-        <h1 className="text-center text-4xl mt-16 mb-16 dark:text-white">
+        <h1 className="text-center text-4xl mt-16 dark:text-white">
           4 bilder 1 konzept
         </h1>
+        <p className="dark:text-white text-center mb-16">(feat. Serlo)</p>
         <Grid />
       </div>
     </>
